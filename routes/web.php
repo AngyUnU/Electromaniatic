@@ -17,6 +17,10 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {//Ruta de bienvenida 
+    return view('index');
+})-> name('index');
+
 Route::resource('/categories',CategoryController::class);
 Route::resource('/clients',ClientController::class);
 Route::resource('/inventories',InventorieController::class);

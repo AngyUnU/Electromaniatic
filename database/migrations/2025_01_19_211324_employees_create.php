@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_empleado', 50)->nullable()->default('nombre');
-            $table->string('apellidos_empleado', 50)->nullable()->default('apellidos');
-            $table->string ('puesto',50)->nullable()->default('empleados');
-            $table->bigInteger('tel')->nullable()->default(1234567890);
-            $table->string('imagen', 100)->nullable()->default('imagen');
+            $table->string('nom_empleado', 50)->required()->default('nombre');
+            $table->string('apellidos_empleado')->required()->default('apellidos');
+            $table->string ('puesto',50)->required()->default('empleados');
+            $table->bigInteger('tel')->required()->default(1234567890);
+            $table->string('imagen', 100)->required()->default('imagen');
 
             $table->timestamps();
 

@@ -17,8 +17,8 @@ return new class extends Migration
                 $table->foreignId('product_id');
                 $table->foreignId('sales_id');
 
-                $table->decimal('precio', 6, 2)->nullable()->default(123.45);
-                $table->integer('stock' )->nullable();
+                $table->decimal('precio', 6, 2)->required()->default(123.45);
+                $table->integer('stock' )->required();
 
 
             $table->timestamps();

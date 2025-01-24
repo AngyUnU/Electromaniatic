@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use App\Http\Requests\Categories\StoreRequest;
+
 
 class CategoryController extends Controller
 {
@@ -13,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
           //
-          $categories = Categories::paginate();
+          $categories = Categories::paginate(5);
           return view('admin/categories/index',compact('categories'));
     }
 
@@ -33,9 +35,14 @@ class CategoryController extends Controller
     {
         //
         $data=$request->all();
+        if(isset($data["image"])){
+            $data["image"]=$filename=time().".".$data["image"]->extension();
+            $request->image->move(public_path("image/products"),$filename);
+        }
         Categories::create($data);
-        return to_route('categories.index')->with ('nombre_categoria');
+        return to_route('categories.index')->with ('status','categoria Registrada');
     }
+
 
     /**
      * Display the specified resource.
@@ -52,7 +59,8 @@ class CategoryController extends Controller
     public function edit(Categories $categories)
     {
         //
-        echo view('admin/categories/edit',compact('address'));
+        $categories=Categories ::pluck('id','categories');
+        echo view('admin/categories/edit', compact('categories','categories'));
     }
 
     /**
@@ -60,10 +68,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Categories $categories)
     {
-        //
-        $data=$request->all();//Pasamos todos los datos
-        $categories->update($data); //Actualizamos los datos en la base de datos
-        return to_route('categories.index')->with ('name_category','nombre de categoria Actualizada');
+        $data=$request->all();
+        if(isset($data["image"])){
+            $data["image"]=$filename=time().".".$data["image"]->extension();
+            $request->image->move(public_path("image/products"),$filename);
+        }
+
+        $categories->update($data);
+        return to_route('categories.index')->with ('status','Categoria Actualizado');
     }
 
     /**

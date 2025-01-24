@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name_categoria', 50)->nullable()->default('products');
+            $table->string('name_categoria', 50)->required()->default('products');
+            $table->string('descripcion', 50)->required()->default('Electronico');
+            $table->string('imagen', 150)->required()->default('img1');
             $table->timestamps();
 
 

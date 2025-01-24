@@ -23,7 +23,8 @@ class StoreRequest extends FormRequest
     {
         return [
           'name_categoria' => "required|min:3|max:50|",
-
+          'descripcion' => "required|min:3|max:50|",
+          'imagen' => "required|file",
         ];
     }
 }
