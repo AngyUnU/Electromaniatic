@@ -104,7 +104,7 @@
             </div>
 <table class="tbl">
     <thead>
-        <h1>Detalles del Producto</h1>
+        <h3> Disponible</h3>
         <th>Id</th>
         <th>Producto</th>
         <th>categoria</th>
