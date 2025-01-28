@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name_cli', 50)->required()->default('clientes');
-            $table->string('apellido_cli',40)->required()->default('apellido paterno');
+            $table->string('name_cli', 50)->required()->default('cliente 001');
+            $table->string('surnames',40)->required()->default('sin apellidos'); //apellidos
             $table->bigInteger('tel')->required()->default(1234567890);
-            $table->string('imagen', 100)->required()->default('imagen');
+            $table->string('image', 100)->nullable()->default('image');
 
             $table->timestamps();
 

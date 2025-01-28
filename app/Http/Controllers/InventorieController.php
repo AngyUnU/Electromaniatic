@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Inventories;
 use Illuminate\Http\Request;
+use App\Http\Requests\Inventories\StoreRequest;
 
 class InventorieController extends Controller
 {
@@ -74,7 +76,7 @@ class InventorieController extends Controller
     {
         //
         $inventories->delete();
-        return to_route('Inventories.index')->with('name_categoria','categoria Eliminada');
+        return to_route('Inventories.index')->with('id','inventario Eliminada');
 
     }
 }

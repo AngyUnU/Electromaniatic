@@ -9,7 +9,7 @@
         padding-block: 4px;
         margin-block: -2px;
         margin-inline: -10px;
-        position: fixed;
+        position:absolute;
         top: 0;
             width: 100%;
             z-index: 1000
@@ -30,7 +30,7 @@
         padding-inline: 10px;
         color: rgb(77, 234, 255);
         margin-inline: -4px;
-        transition: background 0.3s ease, padding 0.3s ease;
+        transition:background 0.3s ease, padding 0.3s ease;
     }
 
     nav p a:hover {
@@ -46,7 +46,7 @@
 <nav>
 
         <p>
-            <a href={{route('index')}}>Inicio</a>
+            <a  href={{route('index')}}>Inicio</a>
             <a href={{route('products.index')}}>Productos</a>
             <a href={{route('clients.index')}}>Clientes</a>
             <a href={{route('sales.index')}}>Ventas</a>

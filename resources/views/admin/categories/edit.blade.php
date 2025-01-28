@@ -2,23 +2,21 @@
 @section('content')
 @include('fragments.formstyle')
 
-@foreach ($categories as $b)
+    <h1 id="titulo"> Editar Categorias</h1>
 
-<h1 id="titulo"> Editar Categorias</h1>
-<form action={{route('categories.update',$b->id)}} method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <br>
-    <label>Nombre de la categoria</label>
-    <input type="text" name="name_categoria"  value={{$b->name_categoria}}>
+    <form action="{{route('categories.update', $categories->id)}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+              <br>
+    <label >Nombre de la categoria </label>
+    <input type="text" name="name_categorie" value="{{$categories->name_categorie}}">
 
-    <label>Descripcion</label>
-    <input type="text" name="descripcion"  value={{$b->descripcion}}>
+    <label >Descripción</label>
+    <input type="text" name="description" value="{{$categories->description}}">
 
-          <label>Imagen de referencia</label>
-    <input type="file" name="imagen">
+    <label >Imagen</label>
+    <input type="file" name="image" value="{{$categories->image}}">
 
-    </select>
-
-    <button type="submit">Actualizar Categoria</button>
+    <button type="submit">Actualizar</button>
 </form>
+@endsection

@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
         $table->id();
-        $table->date('fecha_ingreso')->required();
+        $table->date('entry_date')->required();
         $table->string('name_pd', 50)->required()->default('producto');
-        $table->string('descripcion_pd', 100)->required()->default('producto');
-        $table->decimal('precio', 6, 2)->required()->default(123.45);
-        $table->foreignId('category_id');
+        $table->string('description_pd', 100)->required()->default('producto');
+        $table->decimal('price', 6, 2)->required()->default(123.45);
+        $table->foreignId('categorie');
         $table->integer('stock' )->required();
-        $table->string('imagen', 100)->required()->default('imagen');
+        $table->string('image', 100)->nullable()->default('image');
 
 
 
         $table->timestamps();
 
-        $table->foreign('category_id')->references('id')->on('categories')
+        $table->foreign('categorie')->references('id')->on('categories')
         ->onDelete('cascade')->onUpdate('cascade');
 
 

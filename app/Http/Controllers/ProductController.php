@@ -16,43 +16,67 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Products::paginate(6);
-        return view('admin.products.index', compact('products'));
+          $products = Products::with('categories')->paginate(20);  // Eager loading de categorías
+    return view('admin.products.index', compact('products'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        $category=Categories::pluck('id','name_categoria');
+    {      
+        $categories = Categories::pluck('name_categorie', 'id');
         return view('admin/products/create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store( Request $request)
     {
-        //
+    $request->validate([
+        'entry_date' => "required|date",
+        'name_pd' => "required|string|min:3|max:50",
+        'description_pd' => "required|string|min:3|max:50",
+        'price' => "required|decimal:2",
+        'categorie' => "required|exists:categories,id",  // Validar el ID de la categoría
+        'stock' => "required|integer",
+        'image' => "required|filled"
+    ]);
 
-        $data=$request->all();
-        if(isset($data["image"])){
-            $data["image"]=$filename=time().".".$data["image"]->extension();
-            $request->image->move(public_path("image/products"),$filename);
-        }
-        Products::create($data);
-        return to_route('products.index')->with ('status','Producto Registrado');
+    // Obtener los datos del formulario
+    $data = $request->all();
+
+    // Buscar la categoría por ID directamente
+    $categorie = Categories::find($data['categorie']);  // Buscar por el ID de la categoría
+
+    // Verificar si se encontró la categoría
+    if (!$categorie) {
+        return redirect()->back()->withErrors(['categorie' => 'Categoría no válida'])->withInput();
     }
 
+    // Procesar la imagen si se cargó
+    if (isset($data["image"])) {
+        $data["image"] = $filename = time() . "." . $data["image"]->extension();
+        $request->image->move(public_path("image/products"), $filename);
+    }
+
+    // Crear el producto con los datos validados
+    Products::create($data);
+
+    // Redirigir con mensaje de éxito
+    return redirect()->route('products.index')->with('status', 'Producto registrado');
+}
     /**
      * Display the specified resource.
      */
-    public function show(Products $products)
+    public function show($id)
     {
-        //
-        return view('admin/products/show', compact('products'));
-
+        $products = Products::find($id); // Asegúrate de que el producto exista
+        if (!$products) {
+            return redirect()->route('products.index')->with('error', 'Producto no encontrado');
+        }
+        return view('admin.products.show', compact('products'));
     }
 
     /**
@@ -61,29 +85,51 @@ class ProductController extends Controller
     public function edit(Products $products)
     {
         //
-        $category=Categories ::pluck('id','categories');
-        echo view('admin/products/edit', compact('categories','products'));
-    }
-
+        
+        $categories = Categories::pluck('name_categorie', 'id');
+        return view('admin.products.edit', compact('products', 'categories')); }
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Products $products)
+    public function update(Request $request, $id,$name_categorie)
     {
-        //
-        $data=$request->all();//Pasamos todos los datos
-        if(isset($data["image"])){//Si imagen es diferente de vacio
-            //Cambiar nombre al archivo a ugardar
-            //Variable de imagen  se le asiagna un nuevo nombre(el nombre del archivo.tiempo/fecha/hora. tipo(jpeg,jpg,png))
-            $data["image"]=$filename=time().".".$data["image"]->extension();
-            //Guardar imagen en la carpeta publica
-            $request->image->move(public_path("image/products"),$filename);
-        }
+        
+            // Buscar el producto por ID
+            $product = Products::findOrFail($id);
+        
+            // Validar los datos del formulario
+    
+            $request->validate([
+    'entry_date' => "required|date",
+    'name_pd' => "required|string|min:3|max:50",
+    'description_pd' => "required|string|min:3|max:50",
+    'price' => "required|decimal:2",
+    'categorie' => "required|exists:categories,id",  // Corregido
+    'stock' => "required|integer",
+    'image' => "required|filled"
+]);
 
-        $products->update($data); //Actualizamos los datos en la base de datos
-        return to_route('products.index')->with ('status','Producto Actualizado');
+            $data = $request->all();
+        
+            if ($request->hasFile('image')) {
+                if ($product->image && file_exists(public_path('image/categories/' . $product->image))) {
+                    unlink(public_path('image/categories/' . $product->image));
+                }
+        
+                $file = $request->file('image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('image/categories'), $filename);
+                $data['image'] = $filename; // Actualizar el nombre de la imagen en los datos
+            } else {
+                $data['image'] = $product->image;
+            }
+        
+            // Actualizar los datos del producto
+            $product->update($data);
+                    return to_route('products.index')->with('status', 'Producto actualizado correctamente');
+        
     }
-
     /**
      * Remove the specified resource from storage.
      */

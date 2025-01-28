@@ -104,35 +104,37 @@
 
 </style>
 <div class="category-details-container">
-    <!-- Título -->
-    <h1 class="title">Detalles de la Categoría</h1>
+    
+    <h1 class="title">Detalles del Cliente</h1>
 
-    <!-- Detalles -->
     <div class="details">
-        <h3>Nombre de la Categoría:</h3>
-        <p>{{ $categories->name_categorie }}</p>
+        <h3>Nombre del cliente:</h3>
+        <p>{{ $client->name_cli }}</p>
 
-        <h3>Descripción:</h3>
-        <p>{{ $categories->description }}</p>
+        <h3>Apellidos del Cliente:</h3>
+        <p>{{ $client->surnames }}</p>
+
+        <h3>Numero Telefonico</h3>
+        <p>{{$client->tel}}</p>
 
         <h3>Imagen:</h3>
         <div class="image-container">
-            @if ($categories->image)
-                <img src="{{ asset('image/categories/' . $categories->image) }}" alt="Imagen de la categoría">
+            @if ($client->image)
+                <img src="{{ asset('image/client/' . $client->image) }}" alt="Imagen de la categoría">
             @else
-                <p>No hay imagen disponible para esta categoría.</p>
+                <p>No hay imagen disponible para este cliente.</p>
             @endif
         </div>
     </div>
 
     <!-- Botones -->
     <div class="button-container">
-        <a href="{{ route('categories.edit', $categories->id) }}" class="button edit-btn">Editar Categoría</a>
-        <form action="{{ route('categories.destroy', $categories->id) }}" method="POST" style="display: inline;">
+        <a href="{{ route('clients.edit', $client->id) }}" class="button edit-btn">Editar Cliente</a>
+        <form action="{{ route('clients.destroy', $client->id) }}" method="POST" style="display: inline;">
             @csrf
             @method('DELETE')
-            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')" class="button delete-btn">
-                Eliminar Categoría
+            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este Cliente?')" class="button delete-btn">
+                Eliminar Cliente
             </button>
         </form>
     </div>

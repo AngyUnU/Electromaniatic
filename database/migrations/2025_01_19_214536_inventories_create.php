@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inventaries', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('category_id');
+                $table->foreignId('categorie_id');
                 $table->foreignId('product_id');
                 $table->foreignId('sales_id');
 
@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories')
+            $table->foreign('categorie_id')->references('id')->on('categories')
             ->onDelete('cascade')->onUpdate('cascade');
 
             $table->foreign('product_id')->references('id')->on('products')

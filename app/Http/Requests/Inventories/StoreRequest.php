@@ -23,11 +23,11 @@ class StoreRequest extends FormRequest
     {
         return [
             //'name' => "required|min:3|max:50|",
-            'category_id' => "required|min:3|max:50|",
-            'product_id' => "required|min:3|max:50|",
-            'sales_id' => "required|min:5|max:50|",
-            'precio' => "required|integer",
-            'stock' => "required|integer"
+            'categorie_id' => "required",
+            'product_id' => "required",
+            'sales_id' => "required",
+            'precio' => "required",
+            'stock' => "required"
         ];
     }
 }

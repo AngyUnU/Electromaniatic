@@ -10,6 +10,6 @@ class Employees extends Model
     use HasFactory;
 
     protected $fillable=[
-        'name_empleado', 'apellidos_empleado','puesto','tel','imagen'
+        'name_e', 'surnames_e','position','tel','image'
     ];
 }

@@ -123,23 +123,23 @@
 </style>
 <div class="delete-container">
     <!-- Título -->
-    <h1 class="title">Eliminar Categoría</h1>
+    <h1 class="title">Eliminar Cliente</h1>
 
     <!-- Alerta de Confirmación -->
     <div class="alert-box">
         <i class="icon-warning"></i>
         <p>
-            ¿Estás seguro de que quieres eliminar la categoría <strong>{{ $categories->name_categorie }}</strong>? <br>
-            Esta acción no se puede deshacer.
+            ¿Estás seguro de  eliminar al cliente de nombre <strong>{{ $client->name_cli }}</strong>? <br>
+            Esta acción no se podra deshacer despues.
         </p>
     </div>
 
     <!-- Botones de Acción -->
     <div class="button-container">
-        <form action="{{ route('categories.index') }}" method="GET">
+        <form action="{{ route('clients.index') }}" method="GET">
             <button type="submit" class="btn cancel-btn">No, Volver</button>
         </form>
-        <form action="{{ route('categories.destroy', $categories->id) }}" method="POST">
+        <form action="{{ route('clients.destroy', $client->id) }}" method="POST">
             @method('DELETE')
             @csrf
             <button type="submit" class="btn delete-btn">Sí, Eliminar</button>

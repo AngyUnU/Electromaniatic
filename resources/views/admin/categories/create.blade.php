@@ -2,6 +2,8 @@
 @section('content')
 @include('fragments.formstyle')
 
+<h1 id="titulo"> Creación de Categoria</h1>
+
 @if ($errors->any())
     @foreach ($errors->all() as $e)
         <div class="error">
@@ -10,19 +12,18 @@
     @endforeach
 @endif
 
-<h1 id="titulo"> Creación de Categoria</h1>
-<form action="{{route('categories.store')}}" method="POST" class="formregistro">
+<form action="{{ route('categories.store') }}" enctype="multipart/form-data" method="POST">
     @csrf
     <br>
-    <label for="" class="">Categoria</label>
-    <input type="text" name="name_categoria">
+    <label>Categoria</label>
+    <input type="text" name="name_categorie">
 
-    <label for="" class="">Descripción</label>
-    <input type="text" name="descripcion">
+    <label>Descripción</label>
+    <input type="text" name="description">
     
-    <label for="" class="">Imagen de referencia</label>
-    <input type="file" name="imagen">
+    <label>Imagen de referencia</label>
+    <input type="file" name="image">
 
-    <button type="submit">Registrar</button>
+    <button type="submit">Agregar</button>
 </form>
 @endsection

@@ -22,11 +22,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-          'nom_empleado' => "required|min:3|max:50|",
-            'apellido_empleado' => "required|min:3|max:50|",
-            'puesto' => "required|min:3|max:50|",
-            'tel' => "required|min:5|max:50|",
-            'imagen' => "required|integer",
+          'name_e' => "required|string|min:3|max:50",
+            'surname_e' => "required|string||max:50",
+            'position' => "required|string|min:3|max:50",
+            'tel' => " |required|integer|max:10",
+            'imagen' => "required|string",
 
         ];
     }

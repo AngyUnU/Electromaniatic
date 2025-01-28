@@ -82,18 +82,19 @@
 <br>
     <h2>Categorias</h2>
     <br>
+
     <button><a href={{route('products.create')}} >Crear Producto</a></button>
-    
     <button><a href= {{route('categories.create')}} >Crear categorias</a></button>
     <button><a href= {{route('products.index')}} >Ver Productos</a></button>
     <br>
     </div>
+
     <br><br>
     <div class="container">
         <div class="tbl_container">
             <div class="colore">
                 
-    <h2>Detalles de categorias</h2>
+    <h2>Categorias</h2>
     </div>
     <table class="tbl">
         <thead>
@@ -108,12 +109,13 @@
             @foreach ($categories as $b)
             <tr>
                 <td>{{$b->id}}</td>
-                <td>{{$b->name_categoria}}</td>
+                <td>{{$b->name_categorie}}</td>
                 <td>{{$b->description}}</td>
-                <td>{{$b->imagen}}</td>
+                <td><img src="/image/categories/{{$b->image}}" width="60" alt="Producto"></td>
                 <td>
-         <button> <a  href={{route('categories.show',$b)}}> Ver </a></button>
-         <button><a href= {{route('categories.edit', $b)}} >editar categorias</a></button>
+         <button> <a  href={{route('categories.show',$b)}}> Detalles </a></button>
+         <button><a href= {{route('categories.edit', $b)}} >Editar</a></button>
+         <button><a href= {{route('categories.delete', $b)}} >Eliminar</a></button>
                 </td>
             </tr>
                 
@@ -131,7 +133,9 @@
 </div>
 </div>
 <br>
+
 {{$categories->links()}}<!-- GENERA LOS ENLACES DE CADA PÁGINA-->
+
 <br>
 <br>
 <br>

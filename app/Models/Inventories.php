@@ -12,11 +12,11 @@ class Inventories extends Model
     use HasFactory;
 
     protected $fillable=[
-        'precio','category', 'stock','product_id','sales_id'
+        'price','categories', 'stock','product_id','sales_id'
     ];
 
     public function category():BelongsTo{
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Categories::class,'category_id');
     }
     public function products():BelongsTo{
         return $this->belongsTo(Products::class,'products_id');

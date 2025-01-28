@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use App\Http\Requests\Categories\StoreRequest;
+
 
 
 class CategoryController extends Controller
@@ -15,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
           //
-          $categories = Categories::paginate(5);
+          $categories = Categories::paginate(20);
           return view('admin/categories/index',compact('categories'));
     }
 
@@ -33,59 +35,106 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name_categorie' => "required|string|min:3|max:50|",
+          'description' => "required|string|min:3|max:50|",
+          'image' => "required|filled",
+            
+        ]);
         $data=$request->all();
-        if(isset($data["image"])){
-            $data["image"]=$filename=time().".".$data["image"]->extension();
-            $request->image->move(public_path("image/products"),$filename);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('image/categories'), $filename); // Guardar la imagen en 'image/categories'
+            $data['image'] = $filename;
         }
         Categories::create($data);
-        return to_route('categories.index')->with ('status','categoria Registrada');
+        return to_route('categories.index')->with ('status','categoria Registrado');
+        
     }
-
-
     /**
      * Display the specified resource.
      */
-    public function show(Categories $categories)
+    public function show($id)
     {
         //
-        return view('admin/categories/show',compact('categories'));
-    }
+        $categories = Categories::findOrFail($id);
+
+        // Enviar la categoría a la vista
+        return view('admin.categories.show', compact('categories'));  
+      }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categories $categories)
+    public function edit($id)
     {
-        //
-        $categories=Categories ::pluck('id','categories');
-        echo view('admin/categories/edit', compact('categories','categories'));
-    }
+        // Encuentra una categoría específica
+        $categories = Categories::findOrFail($id); 
+    
+        // Envía el registro único a la vista
+        return view('admin.categories.edit', compact('categories'));
 
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categories $categories)
+    public function update(Request $request, $id)
     {
-        $data=$request->all();
-        if(isset($data["image"])){
-            $data["image"]=$filename=time().".".$data["image"]->extension();
-            $request->image->move(public_path("image/products"),$filename);
+        // Buscar el producto por ID
+        $categories = Categories::findOrFail($id);
+    
+        // Validar los datos del formulario
+        $request->validate([
+            'name_categorie' => "required|string|min:3|max:50|",
+            'description' => "required|string|min:3|max:50|",
+            'image' => "required|filled",
+        ]);
+    
+        // Obtener todos los datos del formulario
+        $data = $request->all();
+    
+        // Manejar la imagen, si se sube una nueva
+        if ($request->hasFile('image')) {
+            // Eliminar la imagen anterior si existe
+            if ($categories->image && file_exists(public_path('image/categories/' . $categories->image))) {
+                unlink(public_path('image/categories/' . $categories->image));
+            }
+    
+            // Guardar la nueva imagen
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('image/categories'), $filename);
+            $data['image'] = $filename; // Actualizar el nombre de la imagen en los datos
+        } else {
+            // Mantener la imagen actual si no se sube una nueva
+            $data['image'] = $categories->image;
         }
-
+    
+        // Actualizar los datos del producto
         $categories->update($data);
-        return to_route('categories.index')->with ('status','Categoria Actualizado');
+    
+        // Redirigir con mensaje de éxito
+        return to_route('categories.index')->with('status', 'categoria actualizada correctamente');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categories $categories)
+    
+    public function delete( $name_categorie){
+        $categories= Categories::findOrFail($name_categorie);
+
+        echo view('admin.categories.delete',compact('categories'));
+    }
+
+    public function destroy($name_categorie )
     {
         //
-        $categories->delete();
-        return to_route('categories.index')->with('name_categoria','categoria Eliminada');
-
+        $category = Categories::findOrFail($name_categorie);
+        $category->delete();
+    
+        return redirect()->route('categories.index')->with('status', 'Categoría eliminada');
+    
     }
 }

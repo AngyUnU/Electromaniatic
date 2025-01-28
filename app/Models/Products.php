@@ -11,11 +11,17 @@ class Products extends Model
 
 
     protected $fillable=[
-        'fecha_ingreso', 'name_pd','descripcion_pd','precio','category_id','stock','imagen'
+        'entry_date',
+         'name_pd',
+         'description_pd',
+         'categorie',
+         'price',
+         'stock',
+         'image'
     ];
 
   //funcion client
-public function category():BelongsTo{
-      return $this->belongsTo(Category::class,'category_id');
+public function categories():BelongsTo{
+      return $this->belongsTo(Categories::class,'categorie','id');
                         }
 }

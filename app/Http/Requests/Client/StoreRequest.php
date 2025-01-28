@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Clients;
+namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,11 +23,10 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'name_cli' => "required|min:3|max:50|",
-            'apellido_cli' => "required|min:3|max:50|",
-            'email' => "required|email",
-            'tel' => "required|integer",
-            'imagen' => "required"
+            'name_cli' => "required|string|min:3|max:50|",
+            'surnames_cli' => "required|string|min:3|max:50|",
+            'tel' => "required|integer|min:10",
+            'image' => "required|filled"
         ];
     }
 }

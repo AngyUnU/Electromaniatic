@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->nullable();;
-            $table->foreignId('category_id')->nullable();;
+            $table->foreignId('name_pd')->nullable();;
+            $table->foreignId('categorie_id')->nullable();;
             $table->foreignId('client_id')->nullable();;
             $table->foreignId('employee_id')->nullable();;
-            $table->date('fecha_venta')->nullable();
+            $table->date('sale_date')->nullable();
 
 
 
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories')
+            $table->foreign('categorie_id')->references('id')->on('categories')
             ->onDelete('cascade')->onUpdate('cascade');
 
             $table->foreign('product_id')->references('id')->on('products')

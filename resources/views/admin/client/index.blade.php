@@ -82,7 +82,7 @@
 <br>
     <h2>Clientes</h2>
     <br>
-    <button><a href={{route('Clients.create')}} >Crear cliente</a></button>
+    <button><a href={{route('clients.create')}} >Crear Nuevo cliente</a></button>
     <br>
     </div>
     <br><br>
@@ -90,27 +90,37 @@
         <div class="tbl_container">
             <div class="colore">
                 
-    <h2>Detalles de clientes</h2>
+    <h2> Clientes</h2>
     </div>
     <table class="tbl">
         <thead>
             <th> id </th>
-            <th> Categoria </th>
-            <th> Descripción </th>
-            <th>  imagen</th>
-            <th>Acciones</th>
+            <th> Nombre </th>
+            <th> Apellidos </th>
+            <th>  telefono</th>
+            <th>  foto </th>
+            <th> Acciones</th>
         </thead>
     
         <tbody>
-            @foreach ($categories as $b)
+            @foreach ($client as $cl)
             <tr>
-                <td>{{$b->id}}</td>
-                <td>{{$b->name_categoria}}</td>
-                <td>{{$b->description}}</td>
-                <td>{{$b->imagen}}</td>
+                <td>{{$cl->id}}</td>
+                <td>{{$cl->name_cli}}</td>
+                <td>{{$cl->surnames}}</td>
+                <td>{{$cl->tel}}</td>
                 <td>
-         <button> <a  href={{route('categories.show',$b)}}> Ver </a></button>
-         <button><a href= {{route('categories.edit', $b)}} >editar categorias</a></button>
+                    @if ($cl->image)
+                        <img src="{{ asset('image/client/' . $cl->image) }}" width="60" alt="Clients">
+                    @else
+                        <span>Sin imagen</span>
+                    @endif
+                </td>
+                <td>
+         <button> <a  href={{route('clients.show',$cl)}}> Ver </a></button>
+         <button><a href= {{route('clients.edit', $cl)}} >Edita</a></button>
+         <button><a href= {{route('clients.delete', $cl)}} >Eliminar</a></button>
+
                 </td>
             </tr>
                 
@@ -128,7 +138,7 @@
 </div>
 </div>
 <br>
-{{$categories->links()}}<!-- GENERA LOS ENLACES DE CADA PÁGINA-->
+{{$client->links()}}<!-- GENERA LOS ENLACES DE CADA PÁGINA-->
 <br>
 <br>
 <br>
