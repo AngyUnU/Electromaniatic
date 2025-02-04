@@ -11,15 +11,23 @@ class Sales extends Model
     use HasFactory;
 
     protected $fillable=[
-        'product_id','categorie_id','client_id','employee_id','sale_date'
+        'product_id',
+    'client_id',
+    'employee_id',
+    'sale_date'
     ];
-    public function category():BelongsTo{
-        return $this->belongsTo(Categories::class,'category_id');
+    public function product()
+    {
+        return $this->belongsTo(Products::class, 'product_id');  // Establece la relación con la tabla 'products'
     }
-    public function products():BelongsTo{
-        return $this->belongsTo(Products::class,'products_id');
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');  // Relación con Client
     }
-    public function client():BelongsTo{
-        return $this->belongsTo(Client::class,'client_id');
+
+    public function employee()
+    {
+        return $this->belongsTo(Employees::class, 'employee_id');  // Relación con Employee
     }
 }

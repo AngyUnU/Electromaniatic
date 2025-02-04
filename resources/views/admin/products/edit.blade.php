@@ -12,21 +12,20 @@
     @endforeach
 @endif
 
-<form action="{{ route('products.update', $products->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
+<form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">    @csrf
     @method('PUT') <!-- Esto es necesario para hacer un PUT request -->
     <br>
     <label>Fecha_Registro</label>
-    <input type="date" name="entry_date" value="{{ old('entry_date', $products->entry_date) }}">
+    <input type="date" name="entry_date" value="{{ old('entry_date', $product->entry_date) }}">
   
     <label>Nombre Producto</label>
-    <input type="text" name="name_pd" value="{{ old('name_pd', $products->name_pd) }}">
+    <input type="text" name="name_pd" value="{{ old('name_pd', $product->name_pd) }}">
     
     <label>Descripción</label>
-    <input type="text" name="description_pd" value="{{ old('description_pd', $products->description_pd) }}">
+    <input type="text" name="description_pd" value="{{ old('description_pd', $product->description_pd) }}">
 
     <label>Precio Unitario</label>
-    <input type="number" step="0.01" name="price" value="{{ old('price', $products->price) }}">
+    <input type="number" step="0.01" name="price" value="{{ old('price', $product->price) }}">
 
     <label>CATEGORIA</label>
     <br>
@@ -40,7 +39,7 @@
 <br><br>
 
     <label>Cantidad de productos</label>
-    <input type="number" name="stock" value="{{ old('stock', $products->stock) }}">
+    <input type="number" name="stock" value="{{ old('stock', $product->stock) }}">
 
     <label>Imagen</label>
     <input type="file" name="image">

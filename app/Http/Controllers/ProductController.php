@@ -82,53 +82,54 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Products $products)
+    public function edit(Products $product)
     {
         //
         
         $categories = Categories::pluck('name_categorie', 'id');
-        return view('admin.products.edit', compact('products', 'categories')); }
+        return view('admin.products.edit', compact('product', 'categories')); }
     
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id,$name_categorie)
+    public function update(Request $request, Products $product)
     {
-        
-            // Buscar el producto por ID
-            $product = Products::findOrFail($id);
-        
-            // Validar los datos del formulario
+        // Validar los datos del formulario
+        $request->validate([
+            'entry_date' => "required|date",
+            'name_pd' => "required|string|min:3|max:50",
+            'description_pd' => "required|string|min:3|max:50",
+            'price' => "required|decimal:2",
+            'categorie' => "required|exists:categories,id",  // Validar el ID de la categoría
+            'stock' => "required|integer",
+            'image' => "nullable|image" // Hacer opcional y validar como imagen
+        ]);
     
-            $request->validate([
-    'entry_date' => "required|date",
-    'name_pd' => "required|string|min:3|max:50",
-    'description_pd' => "required|string|min:3|max:50",
-    'price' => "required|decimal:2",
-    'categorie' => "required|exists:categories,id",  // Corregido
-    'stock' => "required|integer",
-    'image' => "required|filled"
-]);
-
-            $data = $request->all();
-        
-            if ($request->hasFile('image')) {
-                if ($product->image && file_exists(public_path('image/categories/' . $product->image))) {
-                    unlink(public_path('image/categories/' . $product->image));
-                }
-        
-                $file = $request->file('image');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('image/categories'), $filename);
-                $data['image'] = $filename; // Actualizar el nombre de la imagen en los datos
-            } else {
-                $data['image'] = $product->image;
+        // Obtener todos los datos del formulario
+        $data = $request->all();
+    
+        // Manejar la imagen, si se sube una nueva
+        if ($request->hasFile('image')) {
+            // Eliminar la imagen anterior si existe
+            if ($product->image && file_exists(public_path('image/products/' . $product->image))) {
+                unlink(public_path('image/products/' . $product->image));
             }
-        
-            // Actualizar los datos del producto
-            $product->update($data);
-                    return to_route('products.index')->with('status', 'Producto actualizado correctamente');
-        
+    
+            // Guardar la nueva imagen
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('image/products'), $filename);
+            $data['image'] = $filename; // Actualizar el nombre de la imagen en los datos
+        } else {
+            // Mantener la imagen actual si no se sube una nueva
+            $data['image'] = $product->image;
+        }
+    
+        // Actualizar los datos del producto
+        $product->update($data);
+    
+        // Redirigir con mensaje de éxito
+        return to_route('products.index')->with('status', 'Producto actualizado correctamente');
     }
     /**
      * Remove the specified resource from storage.

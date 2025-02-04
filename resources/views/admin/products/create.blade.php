@@ -11,12 +11,13 @@
         </div>
     @endforeach
 @endif
+<button><a href="{{route('categories.create')}}">Crear Categorias</a></button>
+<button><a href="{{route('categories.index')}}">Ver Categorias</a></button>
 
 <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <br>
-    <label>Fecha_Registro</label>
-    <input type="date" name="entry_date">
+    
   
     <label>Nombre Producto</label>
     <input type="text" name="name_pd">
@@ -40,7 +41,8 @@
     <br>
     <label>Cantidad de productos</label>
     <input type="number" name="stock">
-
+    <label>Fecha_Registro</label>
+    <input type="date" name="entry_date">
     <label>Imagen</label>
     <input type="file" name="image">
 

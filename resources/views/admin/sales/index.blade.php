@@ -78,9 +78,7 @@
 
 </style>
 <div class="topcentral">
-    <br>
-    <h2>Empleados</h2>
-    <br>
+
     
     <button><a href={{route('employees.create')}} >Crear Empleado</a></button>
     <button><a href= {{route('employees.index')}} >Ver Empleados</a></button>
@@ -111,9 +109,11 @@
                     @foreach ($sales as $sale)
                         <tr>
                             <td>{{ $sale->id }}</td>
-                            <td>{{ $sale->products->name_pd}}</td>
+                            <td>
+                             {{   $sale->product->name_pd}}
+                            </td>
                             <td>{{ $sale->client->name_cli }}</td>
-                            <td>{{ $sale->employee->name_em}}</td>
+                            <td>{{ $sale->employee->name_e}}</td>
                             <td>{{ $sale->sale_date }}</td>
                             <td>
                                 <button><a href="{{ route('sales.show', $sale) }}">Detalles</a></button>
@@ -132,9 +132,6 @@
 </div>
 </div>
 <br>
-
-{{$employees->links()}}<!-- GENERA LOS ENLACES DE CADA PÁGINA-->
-
 <br>
 <br>
 <br>

@@ -22,61 +22,123 @@
 <style>
 
 
-    /* Título de la página */
-    #titulo {
-        font-size: 2rem;
-        color: #333;
-    }
+.delete-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #9afffa;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 1s ease-in-out;
+}
 
-    /* Caja de mensaje */
-    .alert {
-        background-color: #102cf982;
-        border-color: #93e0f7;
-        padding: 30px;
-        font-size: 1.25rem;
-        border-radius: 8px;
-    }
+/* Título */
+.delete-container .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d90429; /* Rojo elegante */
+    margin-bottom: 1.5rem;
+}
 
-    /* Botones */
-    .btn {
-        width: 200px;
-        height: 50px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        border-radius: 25px;
-        transition: background-color 0.3s, transform 0.2s;
-    }
+/* Alerta de Confirmación */
+.alert-box {
+    background: #e1ff9a;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.1);
+    position: relative;
+    animation: slideIn 0.8s ease-out;
+}
 
-    .btn:hover {
-        transform: scale(1.05);
-    }
+.alert-box p {
+    font-size: 1.2rem;
+    color: #e63946; /* Rojo oscuro */
+    margin: 0;
+}
 
-    /* Botón de "No" (Volver) */
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #5a6268;
-    }
+.icon-warning {
+    font-size: 3rem;
+    color: #ff5733; /* Naranja cálido */
+    margin-bottom: 0.5rem;
+    animation: bounce 1.5s infinite;
+}
 
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        border-color: #4e555b;
-    }
+/* Botones */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
 
-    /* Botón de "Sí" (Eliminar) */
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #c82333;
-    }
+.btn {
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    .btn-danger:hover {
-        background-color: #c82333;
-        border-color: #bd2130;
-    }
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 
-    /* Espaciado y alineación */
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
+/* Botón Cancelar */
+.cancel-btn {
+    background: #6c757d; /* Gris */
+    color: #ffffff;
+    border: none;
+}
+
+.cancel-btn:hover {
+    background: #5a6268;
+}
+
+/* Botón Eliminar */
+.delete-btn {
+    background: #e63946; /* Rojo */
+    color: #ffffff;
+    border: none;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+/* Animaciones */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
     }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
 </style>

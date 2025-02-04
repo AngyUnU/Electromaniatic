@@ -2,7 +2,7 @@
 @section('content')
 <style>
     /* Contenedor principal */
-.category-details-container {
+.sale-details-container {
     max-width: 700px;
     margin: 2rem auto;
     padding: 2rem;
@@ -14,7 +14,7 @@
 }
 
 /* Título */
-.category-details-container .title {
+.sale-details- .title {
     font-size: 2.5rem;
     font-weight: bold;
     color: #4b5563; /* Gris oscuro */
@@ -103,39 +103,45 @@
 }
 
 </style>
-<div class="category-details-container">
+<br>
+<br>
+<div class="sale-details-container">
     <!-- Título -->
-    <h1 class="title">Detalles de la Categoría</h1>
+    <h1 class="title">Detalles de la Venta</h1>
 
     <!-- Detalles -->
     <div class="details">
-        <h3>Nombre de la Categoría:</h3>
-        <p>{{ $categories->name_categorie }}</p>
+        <h3>ID de Venta:</h3>
+        <p>{{ $sale->id }}</p> <!-- ID de la venta -->
 
-        <h3>Descripción:</h3>
-        <p>{{ $categories->description }}</p>
-
-        <h3>Imagen:</h3>
-        <div class="image-container">
-            @if ($categories->image)
-                <img src="{{ asset('image/categories/' . $categories->image) }}" alt="Imagen de la categoría">
+        <h3>Producto:</h3>
+        <p>
+            @if($sale->product) <!-- Verifica si el producto existe -->
+                {{ $sale->product->name_pd }}
             @else
-                <p>No hay imagen disponible para esta categoría.</p>
+                Producto no disponible
             @endif
-        </div>
+        </p> <!-- Nombre del producto -->
+
+        <h3>Cliente:</h3>
+        <p>{{ $sale->client->name_cli }}</p> <!-- Nombre del cliente -->
+
+        <h3>Empleado:</h3>
+        <p>{{ $sale->employee->name_e }}</p> <!-- Nombre del empleado -->
+
+        <h3>Fecha de Venta:</h3>
+        <p>{{ $sale->sale_date }}</p> <!-- Fecha de la venta -->
     </div>
 
     <!-- Botones -->
     <div class="button-container">
-        <a href="{{ route('categories.edit', $categories->id) }}" class="button edit-btn">Editar Categoría</a>
-        <form action="{{ route('categories.destroy', $categories->id) }}" method="POST" style="display: inline;">
+        <a href="{{ route('sales.edit', $sale->id) }}" class="button edit-btn">Editar Venta</a> <!-- Ruta de edición -->
+        <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" style="display: inline;"> <!-- Ruta de eliminación -->
             @csrf
             @method('DELETE')
-            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')" class="button delete-btn">
-                Eliminar Categoría
+            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar esta venta?')" class="button delete-btn">
+                Eliminar Venta
             </button>
         </form>
     </div>
 </div>
-
-@endsection

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->nullable();;
-            $table->foreignId('name_pd')->nullable();;
-            $table->foreignId('categorie_id')->nullable();;
             $table->foreignId('client_id')->nullable();;
             $table->foreignId('employee_id')->nullable();;
             $table->date('sale_date')->nullable();
@@ -23,9 +21,6 @@ return new class extends Migration
 
 
             $table->timestamps();
-
-            $table->foreign('categorie_id')->references('id')->on('categories')
-            ->onDelete('cascade')->onUpdate('cascade');
 
             $table->foreign('product_id')->references('id')->on('products')
             ->onDelete('cascade')->onUpdate('cascade');
